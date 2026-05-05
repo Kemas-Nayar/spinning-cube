@@ -1,20 +1,20 @@
-# 🎲 Spinning Cube - Terminal Animation
+# Animasi Kubus 3D Di Terminal Menggunakan C by Ilkomerz Timothee Chalamet
 
-A mesmerizing 3D rotating cube animation rendered entirely in your terminal using ASCII characters. Watch a wireframe cube spin in 3D space with realistic perspective and lighting effects.
+Animasi kubus 3D yang dirender menggunakan karakter ASCII dalam terminal dan penerapan rumus matematikanya untuk mengimplementasikan dynamic lighting. Proyek ini terinspirasi dari 'Donut math: how donut.c works' (https://www.a1k0n.net/2011/07/20/donut-math.html)
 
 ![Cube Preview](3dgridcube.png)
 
-## ✨ Features
+## Fitur
 
-- **Real-time 3D Rotation**: Cube rotates smoothly on all three axes
-- **Perspective Projection**: Proper 3D-to-2D projection with perspective scaling
-- **Depth Buffering**: Z-buffer implementation ensures correct face visibility
-- **Lighting System**: Dot product-based luminance calculation with brightness mapping
-- **ASCII Art Rendering**: Different characters for each face with shading
-- **Terminal Rendering**: Works in any standard terminal (160×40 characters)
-- **Smooth Animation**: ~60 FPS animation loop
+- **Rotasi 3D Real-time:** Kubus berputar mulus di ketiga sumbu (X, Y, Z).
+- **Proyeksi Perspektif**: Proyeksi 3D-ke-2D yang akurat dengan penskalaan perspektif.
+- **Depth Buffering**: Implementasi Z-Buffer untuk memastikan keterlihatan semua sisi kubus.
+- **Sistem Pencahayaan**: Kalkulasi luminasi berbasis dot product dengan pemetaan kecerahan.
+- **Rendering Dengan Seni ASCII**: Karakter ASCII berbeda untuk setiap pencahayaan dan bayangan.
+- **Terminal Rendering**: Dapat dijalankan dalam terminal manapun (ukuran dapat dimodifikasi)
+- **Smooth Animation**: Kecepatan sekitar 60 FPS
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - GCC compiler
@@ -27,7 +27,7 @@ A mesmerizing 3D rotating cube animation rendered entirely in your terminal usin
 gcc main.c -lm -o spinning-cube
 ```
 
-The `-lm` flag links the math library (required for trigonometric functions).
+Flag `-lm` menautkan library matematika bawaan C (wajib digunakan untuk menjalankan fungsi trigonometri).
 
 ### Running
 
@@ -35,75 +35,63 @@ The `-lm` flag links the math library (required for trigonometric functions).
 ./spinning-cube
 ```
 
-Press `Ctrl+C` to stop the animation.
+Tekan `Ctrl+C` untuk menghentikan animasi.
 
-## 🎨 How It Works
+## Cara Kerja
 
-### Core Algorithm
+### Algoritma
 
-1. **Rotation Matrix Computation**: Converts 3D points using Euler angles (A, B, C)
-   - Angles increment each frame for smooth rotation
-   - Precomputed sin/cos values for efficiency
+1. **Komputasi Rotasi Matriks**: Konversi titik 3D dengan sudut euler (A, B, C)
+   - Sudut di-increment tiap frame
+   - Nilai sin/cos yang di precomputed untuk efisiensi
 
-2. **Projection**: Projects 3D coordinates to 2D screen space
-   - Uses perspective division (1/Z scaling)
-   - K1 and K2 are scaling constants for proper sizing
+2. **Proyeksi**: Proyeksi koordinat 3D ke ruang layar 2D
+   - Menggunakan perspective division (1/Z scaling)
+   - K1 dan K2 merupakan scaling constants untuk proper sizing
 
 3. **Lighting**: Normal vector illumination
-   - Dot product with light direction determines brightness
-   - Maps intensity to ASCII character set: `.,-~:;=!*#$@`
+   - Dot product dengan arah cahaya untuk menentukan kecerahan
+   - Memetakan intensitas cahaya menggunakan ASCII: `.,-~:;=!*#$@`
 
-4. **Z-Buffering**: Maintains depth information
-   - Only renders closest surface at each pixel
-   - Prevents overlapping face artifacts
+4. **Z-Buffering**: Menyimpan informasi kedalaman
+   - Hanya merender permukaan terdekat tiap pixel
+   - Memastikan tidak ada overlapping pada face artifacts
 
-### 3D Transformation
+### 3D Transformasi
 
-The code performs a series of 3D rotations:
-- **Rotation matrices** for all three axes are combined
-- **Normal vectors** are also rotated to maintain correct lighting
-- **Depth scaling** creates the perspective effect
+Kode ini melakukan:
+- **Matriks Rotasi** untuk ketiga sumbu yang digabung menjadi satu
+- **Vektor normal** juga dirotasikan untuk memastikan kebenaran lighting
+- **Depth scaling** untuk menghasilkan efek perspektif
 
-### ASCII Character Mapping
+## Konsep Matematis
 
-Each face uses different characters for visual distinction:
-- **Front**: `@`
-- **Back**: `$`
-- **Left**: `~`
-- **Right**: `#`
-- **Top**: `;`
-- **Bottom**: `+`
-
-Brightness varies based on surface normal angle to the light source.
-
-## 📐 Mathematical Concepts
-
-### Projection Formula
+### Rumus Proyeksi
 ```
 x_screen = (x_rotated / z_rotated) * K1 * 2 + WIDTH/2
 y_screen = (y_rotated / z_rotated) * K1 + HEIGHT/2
 ```
 
-### Luminance (Lighting)
+### Luminasi (Lighting)
 ```
 L = normal_x * light_x + normal_y * light_y + normal_z * light_z
 ```
 
-### Rotation Transformations
-Full 3D rotation matrix combining rotations around X, Y, and Z axes using precomputed sin/cos values.
+### Transformasi Rotasi
+Matriks rotasi 3D penuh yang menggabungkan perputaran sumbu X, Y, dan Z yang menggunakan nilai sin/cos yang sudah di komputasi sebelumnya.
 
-## ⚙️ Configuration
+## Konfigurasi
 
-You can customize the animation by modifying these constants in `main.c`:
+Anda juga bisa mengotak-atik `main.c` untuk menghasilkan animasi yang anda mau:
 
-- `WIDTH` (160): Terminal width in characters
-- `HEIGHT` (40): Terminal height in characters
-- `S` (30): Half the cube side length
-- `STEP` (0.5): Point density on each face (smaller = denser)
-- `K1` (100), `K2` (250): Scaling constants
-- `A`, `B`, `C` increment values (lines 161-163): Rotation speed
+- `WIDTH` (160): Lebar Terminal dalam karakter
+- `HEIGHT` (40): Tinggi Terminal dalam karakter
+- `S` (30): Setengah panjang sisi kubus
+- `STEP` (0.5): Kepadatan titik tiap sisinya (kecil = padat)
+- `K1` (100), `K2` (250): Konstanta pembesar
+- `A`, `B`, `C` increment values (lines 161-163): Kecepatan rotasi
 
-## 📚 Technical Details
+## Technical Details
 
 - **Language**: C
 - **Dependencies**: Standard C library + math.h
@@ -111,7 +99,7 @@ You can customize the animation by modifying these constants in `main.c`:
 - **Memory**: ~66KB for buffers (160×40 = 6400 characters + 6400 floats)
 - **Rendering Method**: Direct terminal manipulation with ANSI escape codes
 
-## 🔧 Customization Ideas
+## Customization Ideas
 
 - Change rotation speeds for faster/slower animation
 - Modify the cube size by adjusting `S`
@@ -119,23 +107,23 @@ You can customize the animation by modifying these constants in `main.c`:
 - Add different ASCII character sets for artistic effects
 - Implement keyboard controls for interactive rotation
 
-## 📖 References
+## References
 
 - 3D Graphics Projection: Perspective transformation
 - Z-Buffer Algorithm: Depth testing
 - Lighting Models: Phong/Gouraud shading basics
 - Terminal Graphics: ANSI escape codes
 
-## 🎓 Educational Value
+## Bobot Edukasi
 
-This project demonstrates:
-- 3D computer graphics fundamentals
-- Matrix transformations and linear algebra
-- Depth sorting and rendering pipelines
-- Trigonometric rotations
+Proyek ini mendemonstrasikan:
+- Fundamental grafika komputer 3D
+- Transformasi matriks dan aljabar linear
+- Susunan kedalaman dan rendering pipelines
+- Rotasi trigonometris
 - Terminal/ASCII art programming
 
-## 📝 License
+## License
 
 Open for learning and modification.
 
